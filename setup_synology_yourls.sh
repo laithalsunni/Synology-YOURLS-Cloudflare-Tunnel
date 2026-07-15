@@ -8,7 +8,7 @@ echo "    YOURLS & CLOUDFLARE TUNNEL MULTI-TENANT DEPLOY       "
 echo "=========================================================="
 
 # 1. Prompt the user for variables
-read -p "Enter your Domain (e.g., qr.alsunninet.com): " DOMAIN
+read -p "Enter your Domain (e.g., ur.YourDomain.com): " DOMAIN
 
 if [ -z "$DOMAIN" ]; then
     echo "❌ Error: Domain cannot be left blank."
@@ -22,14 +22,14 @@ DOMAIN=$(echo "$DOMAIN" | sed -e 's|^[^/]*//||' -e 's|/.*||')
 SAFE_DOMAIN=$(echo "$DOMAIN" | tr '.' '-')
 PROJECT_NAME="yourls-$SAFE_DOMAIN"
 
-read -p "Enter Database Name [yourls]: " DB_NAME
-DB_NAME=${DB_NAME:-yourls}
-read -p "Enter Database User [yourls]: " DB_USER
-DB_USER=${DB_USER:-yourls}
+read -p "Enter Database Name [yourlsadmin]: " DB_NAME
+DB_NAME=${DB_NAME:-yourlsadmin}
+read -p "Enter Database User [yourlsadmin]: " DB_USER
+DB_USER=${DB_USER:-yourlsadmin}
 read -sp "Enter Database Password: " DB_PASS
 echo ""
-read -p "Enter YOURLS Admin Username [laith]: " ADMIN_USER
-ADMIN_USER=${ADMIN_USER:-laith}
+read -p "Enter YOURLS Admin Username [admin]: " ADMIN_USER
+ADMIN_USER=${ADMIN_USER:-admin}
 read -sp "Enter YOURLS Admin Password: " ADMIN_PASS
 echo ""
 read -p "Enter your Cloudflare Tunnel Token: " TUNNEL_TOKEN
