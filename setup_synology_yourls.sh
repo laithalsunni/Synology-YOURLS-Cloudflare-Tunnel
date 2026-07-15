@@ -1,4 +1,3 @@
-```bash
 #!/bin/bash
 set -e
 clear
@@ -6,9 +5,13 @@ clear
 echo "=========================================================="
 echo "    YOURLS & CLOUDFLARE TUNNEL MULTI-TENANT DEPLOY       "
 echo "=========================================================="
+echo "💡 Note: For options with brackets like [default], simply"
+echo "   press Enter to keep and apply the default value."
+echo "=========================================================="
+echo ""
 
 # 1. Prompt the user for variables
-read -p "Enter your Domain (e.g., ur.YourDomain.com): " DOMAIN
+read -p "Enter your Domain (e.g., yourls.YourDomain.com): " DOMAIN
 
 if [ -z "$DOMAIN" ]; then
     echo "❌ Error: Domain cannot be left blank."
@@ -22,27 +25,44 @@ DOMAIN=$(echo "$DOMAIN" | sed -e 's|^[^/]*//||' -e 's|/.*||')
 SAFE_DOMAIN=$(echo "$DOMAIN" | tr '.' '-')
 PROJECT_NAME="yourls-$SAFE_DOMAIN"
 
-read -p "Enter Database Name [yourlsadmin]: " DB_NAME
-DB_NAME=${DB_NAME:-yourlsadmin}
-read -p "Enter Database User [yourlsadmin]: " DB_USER
-DB_USER=${DB_USER:-yourlsadmin}
-read -sp "Enter Database Password: " DB_PASS
+# Prompt for Synology Volume/Base Directory Path
+echo "➔ Where is your Docker folder located?"
+read -p "  Enter Synology volume path (Press Enter for default [/volume1]): " VOL_PATH
+
+VOL_PATH=${VOL_PATH:-/volume1}
+
+# Strip any trailing slashes from volume path
+VOL_PATH=$(echo "$VOL_PATH" | sed 's|/*$||')
+
+echo "➔ Database Settings"
+read -p "  Enter Database Name (Press Enter for default [yourls]): " DB_NAME
+DB_NAME=${DB_NAME:-yourls}
+
+read -p "  Enter Database User (Press Enter for default [yourls]): " DB_USER
+DB_USER=${DB_USER:-yourls}
+
+read -sp "  Enter Database Password (Required - No Default): " DB_PASS
 echo ""
-read -p "Enter YOURLS Admin Username [admin]: " ADMIN_USER
+
+echo "➔ YOURLS Administration Credentials"
+read -p "  Enter YOURLS Admin Username (Press Enter for default [admin]): " ADMIN_USER
 ADMIN_USER=${ADMIN_USER:-admin}
-read -sp "Enter YOURLS Admin Password: " ADMIN_PASS
+
+read -sp "  Enter YOURLS Admin Password (Required - No Default): " ADMIN_PASS
 echo ""
-read -p "Enter your Cloudflare Tunnel Token: " TUNNEL_TOKEN
+
+echo "➔ Cloudflare Integration"
+read -p "  Enter your Cloudflare Tunnel Token (Required - No Default): " TUNNEL_TOKEN
 echo -e "\n==========================================================\n"
 
 # Validate remaining required variables
 if [ -z "$DB_PASS" ] || [ -z "$ADMIN_USER" ] || [ -z "$ADMIN_PASS" ] || [ -z "$TUNNEL_TOKEN" ]; then
-    echo "❌ Error: Required fields cannot be left blank."
+    echo "❌ Error: Required fields (Passwords & Tunnel Token) cannot be left blank."
     exit 1
 fi
 
-# 2. Define dynamic, domain-isolated directory structures (Synology clean paths)
-BASE_DIR="/volume1/docker/$PROJECT_NAME"
+# 2. Define dynamic, domain-isolated directory structures
+BASE_DIR="$VOL_PATH/docker/$PROJECT_NAME"
 YOURLS_DATA_DIR="$BASE_DIR/html-user"
 DB_DATA_DIR="$BASE_DIR/mariadb"
 PLUGINS_DIR="$YOURLS_DATA_DIR/plugins"
