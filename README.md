@@ -43,7 +43,7 @@ Before running the installation, you will need a **Cloudflare Tunnel Token**. Fo
 SSH into your Synology NAS as an administrator and execute the following single command:
 
 ```bash
-bash -c "$(curl -fsSL [https://raw.githubusercontent.com/AlsunniNet/Synology-YOURLS-Cloudflare-Tunnel/main/setup_synology_yourls.sh](https://raw.githubusercontent.com/AlsunniNet/Synology-YOURLS-Cloudflare-Tunnel/main/setup_synology_yourls.sh))"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/AlsunniNet/Synology-YOURLS-Cloudflare-Tunnel/main/setup_synology_yourls.sh)"
 
 ```
 
