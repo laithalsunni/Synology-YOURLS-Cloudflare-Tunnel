@@ -1,5 +1,4 @@
 
-
 # YOURLS & Cloudflare Tunnel Multi-Tenant Deployer for Synology NAS 🚀
 
 An automated, zero-config script to deploy isolated, multi-tenant instances of **YOURLS (Your Own URL Shortener)** backed by **MariaDB** and securely exposed via **Cloudflare Tunnels** directly on your Synology NAS.
@@ -11,8 +10,8 @@ No open ports. No reverse proxy head-scratching. Pure, automated convenience.
 ## ✨ Features
 
 * 🛡️ **Zero Open Ports:** Leverages Cloudflare Tunnels to securely expose YOURLS without dynamic DNS or port forwarding.
-* 📦 **Multi-Tenant Isolation:** Automatically partitions data, containers, and configurations per domain inside `/volume1/docker/yourls-[domain]`.[cite: 1]
-* 🔌 **Pre-Loaded Plugins:** Automatically bootstraps highly useful YOURLS plugins:[cite: 1]
+* 📦 **Multi-Tenant Isolation:** Automatically partitions data, containers, and configurations per domain inside `/volume1/docker/yourls-[domain]`[cite: 1].
+* 🔌 **Pre-Loaded Plugins:** Automatically bootstraps highly useful YOURLS plugins:
   * Sample QR Code (`qrcode`)[cite: 1]
   * Forward Slashes in URLs (`slashes`)[cite: 1]
   * Fallback URL (`fallback`)[cite: 1]
@@ -20,7 +19,7 @@ No open ports. No reverse proxy head-scratching. Pure, automated convenience.
   * Import/Export (`import-export`)[cite: 1]
   * Additional Charsets (`additional-charsets`)[cite: 1]
   * Upload & Shorten Advanced (`Upload-and-Shorten-Advanced`)[cite: 1]
-* 🔀 **Root Domain Redirect:** Instantly redirects root domain requests (e.g., `https://yourdomain.com/`) to the admin panel (`/admin`).[cite: 1]
+* 🔀 **Root Domain Redirect:** Instantly redirects root domain requests (e.g., `https://yourdomain.com/`) to the admin panel (`/admin`)[cite: 1].
 
 ---
 
@@ -65,7 +64,8 @@ Once the script completes, follow these simple steps to import and run your proj
 
 
 * **Path:** Choose **"Set path to an existing folder"** and select:
-`/volume1/docker/yourls-[your-domain-with-dashes]`
+`/volume1/docker/yourls-[your-domain-with-dashes]` (or your chosen custom volume path).
+
 
 * **Source:** Select **"Use existing docker-compose.yml"** (The script has already generated this for you in the folder).
 
@@ -84,16 +84,17 @@ Once the script completes, follow these simple steps to import and run your proj
 1. Go back to your **Cloudflare Zero Trust Dashboard** -> **Networks** -> **Tunnels**.
 2. Find the tunnel associated with the token you provided during setup and click **Edit**.
 3. Under the **Public Hostname** tab, click **Add a public hostname**:
-* **Subdomain/Domain:** Enter your YOURLS domain (e.g., `qr.alsunninet.com`).
+* **Subdomain/Domain:** Enter your YOURLS domain (e.g., `yourls.YourDomain.com`).
 * **Service Type:** `HTTP`
 * **URL:** `web-[your-domain-with-dashes]:8080` (The script outputs this exact target address).
 
 
 
 
-4. Access your new YOURLS instance at: `https://your-domain.com/admin/`
-
+4. Access your new YOURLS instance at: `https://[your-domain]/admin/`
 
 ```
+
+
 
 ```
